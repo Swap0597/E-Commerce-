@@ -37,6 +37,7 @@
 //    }
 //}
 package com.example.ecomm;
+
 import java.sql.*;
 
 public class DatabaseConnection {
@@ -45,17 +46,17 @@ public class DatabaseConnection {
     String userName = "root";
     String password = "123456";
 
-    private Statement getStatement(){
-        try{
-            Connection conn =  DriverManager.getConnection(dbURl, userName, password);
+    private Statement getStatement() {
+        try {
+            Connection conn = DriverManager.getConnection(dbURl, userName, password);
             return conn.createStatement();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ResultSet getQueryTable(String query){
+    public ResultSet getQueryTable(String query) {
         Statement statement = getStatement();
         try {
             return statement.executeQuery(query);
@@ -65,7 +66,7 @@ public class DatabaseConnection {
         return null;
     }
 
-    public boolean insertUpdate(String query){
+    public boolean insertUpdate(String query) {
         Statement statement = getStatement();
         try {
             statement.executeUpdate(query);

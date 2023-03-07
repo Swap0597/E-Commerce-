@@ -11,17 +11,18 @@ public class ProductList {
     public TableView<Product> productTable;
     //TableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-    public Pane getSearchedProduct(String query){
+    public Pane getSearchedProduct(String query) {
         ObservableList<Product> productList = Product.getSearchedProduct(query);
         return createTableFromList(productList);
     }
 
-    public Pane getAllProducts(){
+    public Pane getAllProducts() {
 
         ObservableList<Product> productList = Product.getAllProducts();
         return createTableFromList(productList);
     }
-    public Pane createTableFromList(ObservableList<Product> productList){
+
+    public Pane createTableFromList(ObservableList<Product> productList) {
         TableColumn id = new TableColumn("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -41,11 +42,13 @@ public class ProductList {
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         return tablePane;
     }
-    public Pane productsInCart(ObservableList<Product> productList){
+
+    public Pane productsInCart(ObservableList<Product> productList) {
 
         return createTableFromList(productList);
     }
-    public Product getSelectedProduct(){
+
+    public Product getSelectedProduct() {
         // getting selected item
         // select single index from table view
         return productTable.getSelectionModel().getSelectedItem();

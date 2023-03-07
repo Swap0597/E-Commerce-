@@ -32,26 +32,29 @@ public class Product {
         this.name = new SimpleStringProperty(name);
         this.price = new SimpleDoubleProperty(price);
     }
-    public static ObservableList<Product> getAllProducts(){
+
+    public static ObservableList<Product> getAllProducts() {
         String allProductList = "SELECT * FROM products";
         return getProducts(allProductList);
     }
-    public static ObservableList<Product> getSearchedProduct(String query){
-        String searchedProduct = "select * from products where name like '%"+query+"%'";
+
+    public static ObservableList<Product> getSearchedProduct(String query) {
+        String searchedProduct = "select * from products where name like '%" + query + "%'";
         return getProducts(searchedProduct);
     }
-    public static ObservableList<Product> getProducts(String query){
+
+    public static ObservableList<Product> getProducts(String query) {
         DatabaseConnection dbConn = new DatabaseConnection();
         ResultSet rs = dbConn.getQueryTable(query);
         ObservableList<Product> result = FXCollections.observableArrayList();
-        try{
-            if(rs != null){
-                while(rs.next()){
+        try {
+            if (rs != null) {
+                while (rs.next()) {
                     // taking out values from RseultSet
                     result.add(new Product(
-                            rs.getInt("pid"),
-                            rs.getString("name"),
-                            rs.getDouble("price")
+                                    rs.getInt("pid"),
+                                    rs.getString("name"),
+                                    rs.getDouble("price")
                             )
                     );
                 }
@@ -61,17 +64,18 @@ public class Product {
         }
         return result;
     }
-    public static ObservableList<Product> getProductsOfOrder(String query){
+
+    public static ObservableList<Product> getProductsOfOrder(String query) {
         DatabaseConnection dbConn = new DatabaseConnection();
         ResultSet rs = dbConn.getQueryTable(query);
         ObservableList<Product> result = FXCollections.observableArrayList();
-        try{
-            if(rs != null){
-                while(rs.next()){
+        try {
+            if (rs != null) {
+                while (rs.next()) {
                     result.add(new Product(
-                            rs.getInt("oid"),
-                            rs.getString("name"),
-                            rs.getDouble("price")
+                                    rs.getInt("oid"),
+                                    rs.getString("name"),
+                                    rs.getDouble("price")
                             )
                     );
                 }

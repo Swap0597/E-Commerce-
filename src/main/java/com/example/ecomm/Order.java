@@ -7,35 +7,38 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 
 public class Order {
-     TableView<Product> orderTable;
-    public  boolean placeOrder(Customer customer, Product product){
-        try{
+    TableView<Product> orderTable;
+
+    public boolean placeOrder(Customer customer, Product product) {
+        try {
             //"INSERT INTO orders(customer_id, product_id, status) VALUES(1,1,'Ordered');"
             String placeOrder = "INSERT INTO orders(customer_id, product_id, status) VALUES(" + customer.getId() + "," + product.getId() + ",'Ordered')";
             DatabaseConnection dbConn = new DatabaseConnection();
             return dbConn.insertUpdate(placeOrder);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public  int placeOrderMultipleProducts(ObservableList<Product> productObservableList, Customer customer){
+    public int placeOrderMultipleProducts(ObservableList<Product> cartItemList, Customer customer) {
         int count = 0;
 
-        for(Product product : productObservableList){
-            if(placeOrder(customer, product)){
+        for (Product product : cartItemList) {
+            if (placeOrder(customer, product)) {
                 count++;
             }
         }
         return count;
     }
-    public  Pane getOrders(){
+
+    public Pane getOrders() {
 
         ObservableList<Product> productList = Product.getAllProducts();
         return createTableFromList(productList);
     }
-    public  Pane createTableFromList(ObservableList<Product> orderList){
+
+    public Pane createTableFromList(ObservableList<Product> orderList) {
         TableColumn id = new TableColumn("Id");
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -56,8 +59,8 @@ public class Order {
         return tablePane;
     }
 
-    public  Pane getOrdersOfCustomer(Customer customer){
-        String order = "select orders.oid, products.name, products.price from products inner join orders  on orders.product_id = products.pid where customer_id = "+customer.getId();
+    public Pane getOrdersOfCustomer(Customer customer) {
+        String order = "select orders.oid, products.name, products.price from products inner join orders  on orders.product_id = products.pid where customer_id = " + customer.getId();
         ObservableList<Product> orderList = Product.getProductsOfOrder(order);
 
         return createTableFromList(orderList);
